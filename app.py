@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jan  8 11:37:52 2025
+Created on Wed Jan  8 14:56:42 2025
 
 @author: ShahrozRehman
 """
@@ -8,6 +8,7 @@ Created on Wed Jan  8 11:37:52 2025
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os  # Import for handling environment variables
 
 # Flask app setup
 app = Flask(__name__)
@@ -95,5 +96,7 @@ def delete_request(id):
     flash('Request deleted successfully!', 'success')
     return redirect(url_for('admin'))
 
+# Dynamic port handling for Render
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))  # Use Render's PORT or fallback to 5000 for local testing
+    app.run(host='0.0.0.0', port=port, debug=True)
